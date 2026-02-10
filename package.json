@@ -1,0 +1,31 @@
+{
+  "name": "kol-generator",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently \"yarn dev:web\" \"yarn dev:api\"",
+    "dev:web": "yarn workspace @kol/web dev",
+    "dev:api": "yarn workspace @kol/api dev",
+    "build": "yarn workspaces foreach -pt run build",
+    "build:web": "yarn workspace @kol/web build",
+    "build:api": "yarn workspace @kol/api build",
+    "lint": "yarn workspaces foreach -pt run lint",
+    "type-check": "yarn workspaces foreach -pt run type-check",
+    "clean": "yarn workspaces foreach -pt run clean",
+    "test": "yarn workspaces foreach -pt run test"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "prettier": "^3.8.1",
+    "turbo": "^1.12.4"
+  },
+  "packageManager": "yarn@4.1.0",
+  "engines": {
+    "node": ">=20.0.0",
+    "yarn": ">=4.0.0"
+  }
+}
