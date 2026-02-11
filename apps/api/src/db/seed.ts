@@ -1,3 +1,6 @@
+// Load .env so DATABASE_URL etc. are set when running: yarn seed
+require('dotenv').config({ path: require('path').resolve(__dirname, '../../.env') });
+
 import mongoose from 'mongoose';
 import { KolProfile } from '../models/kol-profile.model';
 import { initDatabase } from '../config/database';

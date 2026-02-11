@@ -35,7 +35,7 @@ AI-powered platform for generating authentic Web3 content in the style of top KO
 ### Backend
 - **Runtime**: Node.js 20+
 - **Framework**: Express.js
-- **Database**: PostgreSQL (primary), Redis (cache)
+- **Database**: MongoDB (primary), Redis (cache, optional)
 - **Language**: TypeScript
 
 ### AI/ML
@@ -64,8 +64,8 @@ kol/
 
 - Node.js 20+ (use nvm: `nvm use`)
 - Yarn 4.1.0+
-- PostgreSQL 14+
-- Redis 7+
+- MongoDB 6+ (or Atlas)
+- Redis 7+ (optional; app runs without it)
 
 ### Installation
 
@@ -89,10 +89,10 @@ cp apps/web/.env.local.example apps/web/.env.local
 cp apps/api/.env.example apps/api/.env
 ```
 
-4. Run database migrations:
+4. (Optional) Seed KOL data:
 ```bash
 cd apps/api
-yarn migrate
+yarn seed
 ```
 
 5. Start development servers:
@@ -134,8 +134,8 @@ This project uses Yarn Workspaces for managing the monorepo:
 ### Backend (`apps/api/.env`)
 - `NODE_ENV` - Environment (development/production)
 - `PORT` - Server port
-- `DATABASE_URL` - PostgreSQL connection string
-- `REDIS_URL` - Redis connection string
+- `DATABASE_URL` - MongoDB connection string (e.g. `mongodb://localhost:27017/kol_generator`)
+- `REDIS_URL` - Redis connection string (optional)
 - `JWT_SECRET` - JWT signing secret
 - `ANTHROPIC_API_KEY` - Claude API key
 - `OPENAI_API_KEY` - OpenAI API key
