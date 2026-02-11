@@ -1,3 +1,21 @@
+// CRITICAL: Load .env first. Other modules (e.g. config/ai-providers.ts) read process.env
+// at import time. With ESM/TS, imports run before other top-level code, so dotenv must
+// run via require() here before any import.
+const path = require('path');
+const fs = require('fs');
+const envPath = path.resolve(__dirname, '../.env');
+require('dotenv').config({ path: envPath });
+// Fallback when run from monorepo root (e.g. yarn dev) where cwd is root
+if (!process.env.GEMINI_API_KEY?.trim()) {
+  const fallbackPath = path.join(process.cwd(), 'apps', 'api', '.env');
+  if (fs.existsSync(fallbackPath)) {
+    require('dotenv').config({ path: fallbackPath });
+  }
+}
+if (!process.env.GEMINI_API_KEY?.trim()) {
+  console.warn(`[API] GEMINI_API_KEY not set. Tried: ${envPath}`);
+}
+
 import app from './app';
 import { logger } from './utils/logger';
 import { initDatabase } from './config/database';

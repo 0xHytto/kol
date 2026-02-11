@@ -4,24 +4,30 @@ import helmet from 'helmet';
 import compression from 'compression';
 import morgan from 'morgan';
 import rateLimit from 'express-rate-limit';
-import dotenv from 'dotenv';
 
 import routes from './routes';
 import { errorHandler } from './middleware/error-handler.middleware';
 import { logger } from './utils/logger';
 
-dotenv.config();
-
 const app = express();
 
 // Security middleware
 app.use(helmet());
-app.use(
-  cors({
-    origin: process.env.CORS_ORIGIN || 'http://localhost:3000',
-    credentials: true,
-  })
-);
+const corsOrigin = process.env.CORS_ORIGIN || '';
+const isDev = process.env.NODE_ENV === 'development';
+const corsOptions: cors.CorsOptions = {
+  origin: (origin, cb) => {
+    const allow = (ok: boolean) => (ok ? cb(null, true) : cb(new Error('Not allowed by CORS')));
+    if (!origin) return allow(true);
+    if (isDev && /^http:\/\/localhost(:\d+)?$/.test(origin)) return allow(true);
+    if (corsOrigin.includes(',')) {
+      return allow(corsOrigin.split(',').map((o) => o.trim()).includes(origin));
+    }
+    allow(origin === (corsOrigin || 'http://localhost:3000'));
+  },
+  credentials: true,
+};
+app.use(cors(corsOptions));
 
 // Rate limiting (abuse / DoS mitigation)
 const rateLimitWindowMs = Number(process.env.RATE_LIMIT_WINDOW_MS) || 15 * 60 * 1000; // 15 min
@@ -64,7 +70,7 @@ app.get('/health', (req, res) => {
 });
 
 // API routes
-app.use(`/api/${process.env.API_VERSION || 'v1'}`, routes);
+app.use('/api', routes);
 
 // 404 handler
 app.use((req, res) => {
