@@ -1,5 +1,5 @@
 import { TweetType } from '@kol/shared-types';
-import claudeService from '../ai/claude.service';
+import geminiService from '../ai/gemini.service';
 import { KolProfile } from '../../models/kol-profile.model';
 import { TweetGeneration } from '../../models/tweet-generation.model';
 import { logger } from '../../utils/logger';
@@ -81,8 +81,8 @@ export class TweetGeneratorService {
 
     logger.info('Generating tweets', { userId, kolId, tone, topic });
 
-    // Call Claude API
-    const response = await claudeService.generateJSON<{ tweets: string[] }>({
+    // Call Gemini API
+    const response = await geminiService.generateJSON<{ tweets: string[] }>({
       prompt,
       maxTokens: 2048,
       temperature: 0.8,
@@ -194,7 +194,7 @@ Do not include any other text, explanations, or markdown formatting. Just the ra
         inputText: topic,
         generatedContent: { variants },
         status: 'completed',
-        aiProvider: 'claude',
+        aiProvider: 'gemini',
         creditsUsed: 1,
       });
     } catch (error) {

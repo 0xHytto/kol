@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.17.0",
+    "@google/generative-ai": "^0.24.1",
     "@kol/shared-constants": "workspace:*",
     "@kol/shared-types": "workspace:*",
     "@kol/shared-utils": "workspace:*",

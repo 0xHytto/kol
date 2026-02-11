@@ -729,6 +729,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@google/generative-ai@npm:^0.24.1":
+  version: 0.24.1
+  resolution: "@google/generative-ai@npm:0.24.1"
+  checksum: 10c0/8da77fc648b04fc2ecef53e75230e2ee67a8fd29a34b6b8874e77a7332b2a1e4b51d44dd9eb604fb063ed8ea46d293aac5b1e2a955ae2435e2582a265f2cb80d
+  languageName: node
+  linkType: hard
+
 "@hookform/resolvers@npm:^3.3.4":
   version: 3.10.0
   resolution: "@hookform/resolvers@npm:3.10.0"
@@ -1293,6 +1300,7 @@ __metadata:
   resolution: "@kol/api@workspace:apps/api"
   dependencies:
     "@anthropic-ai/sdk": "npm:^0.17.0"
+    "@google/generative-ai": "npm:^0.24.1"
     "@kol/eslint-config": "workspace:*"
     "@kol/shared-constants": "workspace:*"
     "@kol/shared-types": "workspace:*"
@@ -1427,6 +1435,7 @@ __metadata:
     sonner: "npm:^1.4.0"
     tailwind-merge: "npm:^2.2.0"
     tailwindcss: "npm:^3.4.0"
+    tailwindcss-animate: "npm:^1.0.7"
     typescript: "npm:^5.3.3"
     zod: "npm:^3.23.0"
     zustand: "npm:^4.5.0"
@@ -10529,6 +10538,15 @@ __metadata:
   version: 2.6.1
   resolution: "tailwind-merge@npm:2.6.1"
   checksum: 10c0/f9b5d7ba37f6c6dc7bb7a090f08252e8d827b5abfc1031bf468c5274ce104409e7952a0075a3e009aab53adda8c6d133bc1dd9d3427e2ae5bc00306f9ce1fbff
+  languageName: node
+  linkType: hard
+
+"tailwindcss-animate@npm:^1.0.7":
+  version: 1.0.7
+  resolution: "tailwindcss-animate@npm:1.0.7"
+  peerDependencies:
+    tailwindcss: "*"
+  checksum: 10c0/ec7dbd1631076b97d66a1fbaaa06e0725fccfa63119221e8d87a997b02dcede98ad88bb1ef6665b968f5d260fcefb10592e0299ca70208d365b37761edf5e19a
   languageName: node
   linkType: hard
 

@@ -43,6 +43,15 @@ export class TweetGeneratorController {
         data: result,
       });
     } catch (error) {
+      const msg = error instanceof Error ? error.message : '';
+      if (msg.includes('GEMINI_API_KEY') || msg.includes('not set')) {
+        next(new AppError(503, 'AI service is not configured. Set GEMINI_API_KEY in apps/api/.env', 'AI_NOT_CONFIGURED'));
+        return;
+      }
+      if (msg.startsWith('RATE_LIMIT:') || msg.includes('rate limit exceeded')) {
+        next(new AppError(429, 'AI rate limit reached. Please try again in a minute.', 'RATE_LIMIT'));
+        return;
+      }
       next(error);
     }
   }
