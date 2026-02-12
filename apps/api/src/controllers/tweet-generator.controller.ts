@@ -9,7 +9,7 @@ const MAX_GENERATIONS_LIMIT = 50;
 export class TweetGeneratorController {
   async generate(req: Request, res: Response, next: NextFunction) {
     try {
-      const { kolId, tone, topic, options } = req.body;
+      const { kolId, tone, topic, language, lengthRange, options } = req.body;
 
       // Validation
       if (!topic || typeof topic !== 'string' || topic.trim().length === 0) {
@@ -21,6 +21,14 @@ export class TweetGeneratorController {
 
       if (!tone || !['professional', 'casual', 'hype', 'technical', 'meme'].includes(tone)) {
         throw new AppError(400, 'Valid tone is required', 'INVALID_TONE');
+      }
+
+      if (language && !['en', 'kr'].includes(language)) {
+        throw new AppError(400, 'Language must be "en" or "kr"', 'INVALID_LANGUAGE');
+      }
+
+      if (lengthRange && !['short', 'medium', 'long'].includes(lengthRange)) {
+        throw new AppError(400, 'lengthRange must be "short", "medium", or "long"', 'INVALID_LENGTH_RANGE');
       }
 
       if (kolId != null && (typeof kolId !== 'string' || !mongoose.Types.ObjectId.isValid(kolId))) {
@@ -35,6 +43,8 @@ export class TweetGeneratorController {
         kolId,
         tone,
         topic,
+        language: language || 'en',
+        lengthRange: lengthRange || 'medium',
         options,
       });
 
