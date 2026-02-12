@@ -1,4 +1,4 @@
-const TWEET_MAX_LENGTH = 280;
+const TWEET_MAX_LENGTH = 1500;
 const THREAD_MAX_TWEETS = 10;
 
 export function validateTweetLength(content: string): {

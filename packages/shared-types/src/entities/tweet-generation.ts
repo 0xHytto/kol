@@ -40,4 +40,5 @@ export interface GenerateTweetDto {
   includeEmojis?: boolean;
   includeHashtags?: boolean;
   aiProvider?: 'claude' | 'gpt4';
+  language?: 'en' | 'kr';
 }
