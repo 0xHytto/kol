@@ -23,8 +23,6 @@ export function TweetCard({ content, length, index }: TweetCardProps) {
     }
   };
 
-  const isOverLimit = length > 280;
-
   return (
     <Card>
       <CardContent className="p-6">
@@ -32,24 +30,14 @@ export function TweetCard({ content, length, index }: TweetCardProps) {
           <div className="text-sm font-medium text-muted-foreground">
             버전 {index + 1}
           </div>
-          <div
-            className={`text-xs ${
-              isOverLimit ? 'text-destructive' : 'text-muted-foreground'
-            }`}
-          >
-            {length}/280
+          <div className="text-xs text-muted-foreground">
+            {length}자
           </div>
         </div>
 
         <div className="whitespace-pre-wrap text-base leading-relaxed">
           {content}
         </div>
-
-        {isOverLimit && (
-          <div className="mt-3 text-xs text-destructive">
-            ⚠️ 트윗 길이 제한을 초과했습니다
-          </div>
-        )}
       </CardContent>
 
       <CardFooter className="p-6 pt-0 gap-2">

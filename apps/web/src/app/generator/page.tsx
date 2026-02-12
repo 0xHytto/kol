@@ -11,6 +11,8 @@ import { Card, CardContent } from '@/components/ui/card';
 import apiClient from '@/lib/api-client';
 
 type Tone = 'professional' | 'casual' | 'hype' | 'technical' | 'meme';
+type Language = 'en' | 'kr';
+type LengthRange = 'short' | 'medium' | 'long';
 
 interface KOL {
   id: string;
@@ -28,6 +30,8 @@ interface TweetVariant {
 export default function TweetGeneratorPage() {
   const [selectedKOL, setSelectedKOL] = useState<KOL | null>(null);
   const [tone, setTone] = useState<Tone>('professional');
+  const [language, setLanguage] = useState<Language>('en');
+  const [lengthRange, setLengthRange] = useState<LengthRange>('medium');
   const [topic, setTopic] = useState('');
   const [loading, setLoading] = useState(false);
   const [generatedTweets, setGeneratedTweets] = useState<TweetVariant[]>([]);
@@ -48,6 +52,8 @@ export default function TweetGeneratorPage() {
         kolId: selectedKOL?.id,
         tone,
         topic: topic.trim(),
+        language,
+        lengthRange,
         options: {
           includeEmojis: true,
           includeHashtags: true,
@@ -80,13 +86,72 @@ export default function TweetGeneratorPage() {
           {/* KOL Selector */}
           <KOLSelector value={selectedKOL} onChange={setSelectedKOL} />
 
+          {/* Language Selector */}
+          <div className="space-y-3">
+            <Label className="text-base font-semibold">
+              2️⃣ 트윗 작성 언어
+            </Label>
+            <div className="flex gap-3">
+              <button
+                type="button"
+                onClick={() => setLanguage('en')}
+                className={`flex-1 flex items-center justify-center gap-2 rounded-lg border-2 px-4 py-3 text-sm font-medium transition-all ${
+                  language === 'en'
+                    ? 'border-primary bg-primary/10 text-primary'
+                    : 'border-muted bg-background text-muted-foreground hover:border-primary/50'
+                }`}
+              >
+                🇺🇸 English
+              </button>
+              <button
+                type="button"
+                onClick={() => setLanguage('kr')}
+                className={`flex-1 flex items-center justify-center gap-2 rounded-lg border-2 px-4 py-3 text-sm font-medium transition-all ${
+                  language === 'kr'
+                    ? 'border-primary bg-primary/10 text-primary'
+                    : 'border-muted bg-background text-muted-foreground hover:border-primary/50'
+                }`}
+              >
+                🇰🇷 한국어
+              </button>
+            </div>
+          </div>
+
           {/* Tone Selector */}
-          <ToneSelector value={tone} onChange={setTone} />
+          <ToneSelector value={tone} onChange={setTone} language={language} />
+
+          {/* Length Range Selector */}
+          <div className="space-y-3">
+            <Label className="text-base font-semibold">
+              4️⃣ 글자수 범위
+            </Label>
+            <div className="flex gap-3">
+              {([
+                { value: 'short' as LengthRange, label: '짧게', sub: '2~300자' },
+                { value: 'medium' as LengthRange, label: '보통', sub: '300~1000자' },
+                { value: 'long' as LengthRange, label: '길게', sub: '1000자+' },
+              ]).map((opt) => (
+                <button
+                  key={opt.value}
+                  type="button"
+                  onClick={() => setLengthRange(opt.value)}
+                  className={`flex-1 flex flex-col items-center justify-center gap-1 rounded-lg border-2 px-4 py-3 text-sm font-medium transition-all ${
+                    lengthRange === opt.value
+                      ? 'border-primary bg-primary/10 text-primary'
+                      : 'border-muted bg-background text-muted-foreground hover:border-primary/50'
+                  }`}
+                >
+                  <span>{opt.label}</span>
+                  <span className="text-xs opacity-70">{opt.sub}</span>
+                </button>
+              ))}
+            </div>
+          </div>
 
           {/* Topic Input */}
           <div className="space-y-3">
             <Label className="text-base font-semibold">
-              3️⃣ 무엇에 대해 쓸까요? (주제 입력)
+              5️⃣ 무엇에 대해 쓸까요? (주제 입력)
             </Label>
             <Textarea
               placeholder="예: Bitcoin ETF 승인, 이더리움 업그레이드, DeFi 프로토콜 보안..."
