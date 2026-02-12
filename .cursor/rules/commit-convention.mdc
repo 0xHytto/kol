@@ -1,0 +1,83 @@
+---
+description: Git commit message convention — apply when creating git commits
+alwaysApply: false
+---
+
+# Commit Convention
+
+Follow the Conventional Commits spec (conventionalcommits.org).
+
+## Format
+
+```
+<type>(<scope>): <subject>
+```
+
+- **type**: `feat`, `fix`, `refactor`, `docs`, `chore`, `test`, `perf`, `ci`, `style`
+- **scope** (optional): affected area — `api`, `web`, `shared`, `db`, `auth`, `infra`, etc.
+- **subject**: imperative mood, lowercase, no period, max 72 chars
+
+## Type Reference
+
+| Type | When to use |
+|------|-------------|
+| `feat` | New feature or capability |
+| `fix` | Bug fix |
+| `refactor` | Code restructure with no behavior change |
+| `docs` | Documentation only |
+| `chore` | Build, deps, config, tooling |
+| `test` | Adding or updating tests |
+| `perf` | Performance improvement |
+| `ci` | CI/CD pipeline changes |
+| `style` | Formatting, whitespace (no logic change) |
+
+## Scope Usage
+
+Use scope when the change clearly belongs to one area:
+
+```
+feat(api): add rate limiting to generation endpoint
+feat(web): add dark mode toggle to settings page
+fix(shared): correct tweet length validation
+chore(infra): upgrade Node to v22
+```
+
+Omit scope when the change spans multiple areas or is project-wide:
+
+```
+feat: add language selection for tweet generation
+chore: update all dependencies to latest
+```
+
+## Subject Guidelines
+
+- Use imperative mood: "add", "fix", "update", "remove" (not "added", "fixes")
+- Lowercase first letter after colon
+- No trailing period
+- Describe the *what*, not the *how*
+- Keep under 72 characters
+
+## Examples
+
+```
+feat(api): add length range parameter to tweet generation
+feat(web): add KOL style selector with search
+fix(api): handle empty topic in generation request
+refactor(shared): extract tone constants to shared package
+docs: add KOL tweet style analysis reference
+chore: bump gemini SDK to v2.1
+test(api): add unit tests for tweet validator
+perf(web): lazy load KOL profile images
+```
+
+## Multi-line Body (optional)
+
+When more context is needed, add a blank line after the subject:
+
+```
+feat(api): add expert-level prompt for tweet generation
+
+Replace generic prompt with KOL-analysis-based expert prompt.
+Add language-specific tone instructions for en/kr.
+Increase maxTokens to 8192 for long-form content.
+```
