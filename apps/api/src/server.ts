@@ -20,6 +20,7 @@ import app from './app';
 import { logger } from './utils/logger';
 import { initDatabase } from './config/database';
 import { initRedis } from './config/redis';
+import { initDailyBriefingScheduler } from './jobs/daily-briefing.job';
 
 const PORT = process.env.PORT || 8000;
 
@@ -37,6 +38,9 @@ async function startServer() {
     //   logger.warn('Running without Redis cache');
     // }
     logger.info('Running without Redis cache (disabled for testing)');
+
+    // Initialize scheduled jobs
+    initDailyBriefingScheduler();
 
     // Start Express server
     const server = app.listen(PORT, () => {
