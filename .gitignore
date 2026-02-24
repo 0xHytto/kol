@@ -75,3 +75,9 @@ temp/
 
 # Windows artifacts
 nul
+
+# Generated images (Hugging Face / local image generation)
+apps/api/public/images/*.jpeg
+apps/api/public/images/*.jpg
+apps/api/public/images/*.png
+apps/api/public/images/*.webp
