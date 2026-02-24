@@ -1,3 +1,4 @@
+import path from 'path';
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
@@ -11,8 +12,15 @@ import { logger } from './utils/logger';
 
 const app = express();
 
+// Serve generated images as static files
+app.use('/images', express.static(path.join(process.cwd(), 'public', 'images')));
+
 // Security middleware
-app.use(helmet());
+app.use(
+  helmet({
+    crossOriginResourcePolicy: { policy: 'cross-origin' },
+  })
+);
 const corsOrigin = process.env.CORS_ORIGIN || '';
 const isDev = process.env.NODE_ENV === 'development';
 const corsOptions: cors.CorsOptions = {

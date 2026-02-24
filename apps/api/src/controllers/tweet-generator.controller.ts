@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import { Request, Response, NextFunction } from 'express';
 import tweetGeneratorService from '../services/tweet/tweet-generator.service';
+import { TweetGeneration } from '../models/tweet-generation.model';
 import { AppError } from '../middleware/error-handler.middleware';
 
 const MAX_TOPIC_LENGTH = 2000;
@@ -69,21 +70,34 @@ export class TweetGeneratorController {
   async getGenerations(req: Request, res: Response, next: NextFunction) {
     try {
       const userId = (req as any).user?.id || 'anonymous';
-      const rawLimit = Number(req.query.limit) || 10;
+      const rawLimit = Number(req.query.limit) || 20;
       const rawOffset = Number(req.query.offset) || 0;
       const limit = Math.min(Math.max(1, rawLimit), MAX_GENERATIONS_LIMIT);
       const offset = Math.max(0, rawOffset);
 
-      // TODO: Implement fetching user's generation history
+      const [rawItems, total] = await Promise.all([
+        TweetGeneration.find({ userId })
+          .sort({ createdAt: -1 })
+          .skip(offset)
+          .limit(limit)
+          .lean(),
+        TweetGeneration.countDocuments({ userId }),
+      ]);
+
+      const items = rawItems.map((item: any) => ({
+        id: item._id.toString(),
+        topic: item.inputText || '',
+        tone: item.tweetType || '',
+        language: item.generationParams?.language || 'en',
+        lengthRange: item.generationParams?.lengthRange || 'medium',
+        kolName: item.generationParams?.kolName || null,
+        variants: item.generatedContent?.variants || [],
+        createdAt: item.createdAt,
+      }));
+
       res.json({
         success: true,
-        data: {
-          items: [],
-          total: 0,
-          page: 1,
-          pageSize: limit,
-          offset,
-        },
+        data: { items, total, limit, offset },
       });
     } catch (error) {
       next(error);

@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import kolProfileRoutes from './kol-profiles.routes';
 import tweetGeneratorRoutes from './tweet-generator.routes';
+import imageGeneratorRoutes from './image-generator.routes';
+import briefingRoutes from './briefing.routes';
 
 const router = Router();
 
@@ -19,10 +21,11 @@ router.get('/test', (req, res) => {
 // Routes
 router.use('/kol-profiles', kolProfileRoutes);
 router.use('/tweet-generator', tweetGeneratorRoutes);
+router.use('/image-generator', imageGeneratorRoutes);
+router.use('/briefing', briefingRoutes);
 
 // TODO: Add more route handlers
 // router.use('/auth', authRoutes);
 // router.use('/users', userRoutes);
-// router.use('/image-generator', imageGeneratorRoutes);
 
 export default router;

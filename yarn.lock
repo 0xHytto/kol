@@ -745,6 +745,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@huggingface/inference@npm:^4.13.13":
+  version: 4.13.13
+  resolution: "@huggingface/inference@npm:4.13.13"
+  dependencies:
+    "@huggingface/jinja": "npm:^0.5.5"
+    "@huggingface/tasks": "npm:^0.19.85"
+  checksum: 10c0/86ea3161f2a6e4011852860ab35be4cb898fcbb6ee0565a989eb43f4e388c6ff3465ccccf1f670c4fdead04b31e98bd5ab667b70df84106b589e2cc1ad8fbb1d
+  languageName: node
+  linkType: hard
+
+"@huggingface/jinja@npm:^0.5.5":
+  version: 0.5.5
+  resolution: "@huggingface/jinja@npm:0.5.5"
+  checksum: 10c0/fbd266b70aa9e1faee82b4468bb92c385727740533a65875e6e06e0d982c3a1f99e8bc14621b4859e98518e91bf03f28efbeca6ce5761e5e4f4da45914eb229e
+  languageName: node
+  linkType: hard
+
+"@huggingface/tasks@npm:^0.19.85":
+  version: 0.19.86
+  resolution: "@huggingface/tasks@npm:0.19.86"
+  checksum: 10c0/45f6667fd04504a4d9485057715c59e5c9c1a1a4aa1a1078686e4911dd8533b4f6c85332c9195854007ee0b3f6d1fa47457170036816afde16cccc7f155b851b
+  languageName: node
+  linkType: hard
+
 "@humanwhocodes/config-array@npm:^0.13.0":
   version: 0.13.0
   resolution: "@humanwhocodes/config-array@npm:0.13.0"
@@ -1301,6 +1325,7 @@ __metadata:
   dependencies:
     "@anthropic-ai/sdk": "npm:^0.17.0"
     "@google/generative-ai": "npm:^0.24.1"
+    "@huggingface/inference": "npm:^4.13.13"
     "@kol/eslint-config": "workspace:*"
     "@kol/shared-constants": "workspace:*"
     "@kol/shared-types": "workspace:*"

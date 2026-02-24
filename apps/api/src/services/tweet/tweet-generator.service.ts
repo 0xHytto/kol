@@ -141,8 +141,11 @@ export class TweetGeneratorService {
     await this.saveGeneration({
       userId,
       kolId,
+      kolName: kolId ? kolName : undefined,
       tone,
       topic,
+      language,
+      lengthRange,
       variants,
     });
 
@@ -268,14 +271,20 @@ Do not include any other text, explanations, or markdown formatting. Just the ra
   private async saveGeneration({
     userId,
     kolId,
+    kolName,
     tone,
     topic,
+    language,
+    lengthRange,
     variants,
   }: {
     userId: string;
     kolId?: string;
+    kolName?: string;
     tone: string;
     topic: string;
+    language: string;
+    lengthRange: string;
     variants: TweetVariant[];
   }) {
     try {
@@ -289,6 +298,11 @@ Do not include any other text, explanations, or markdown formatting. Just the ra
         status: 'completed',
         aiProvider: 'gemini',
         creditsUsed: 1,
+        generationParams: {
+          language,
+          lengthRange,
+          kolName: kolName || null,
+        },
       });
     } catch (error) {
       logger.error('Error saving tweet generation:', error);
