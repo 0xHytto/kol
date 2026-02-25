@@ -7,10 +7,10 @@ import apiClient from '@/lib/api-client';
 
 interface KOL {
   id: string;
-  twitter_handle: string;
-  display_name: string;
+  twitterHandle: string;
+  displayName: string;
   bio: string;
-  follower_count: number;
+  followerCount: number;
 }
 
 interface KOLSelectorProps {
@@ -29,7 +29,13 @@ export function KOLSelector({ value, onChange }: KOLSelectorProps) {
   const fetchKOLs = async () => {
     try {
       const response = await apiClient.get('/kol-profiles?limit=10');
-      setKols(response.data || []);
+      const data = response.data || [];
+      // Map _id to id for frontend
+      const kols = data.map((kol: any) => ({
+        ...kol,
+        id: kol._id || kol.id
+      }));
+      setKols(kols);
     } catch (error) {
       console.error('Failed to fetch KOLs:', error);
     } finally {
@@ -38,6 +44,7 @@ export function KOLSelector({ value, onChange }: KOLSelectorProps) {
   };
 
   const formatFollowers = (count: number) => {
+    if (!count && count !== 0) return '0';
     if (count >= 1000000) return `${(count / 1000000).toFixed(1)}M`;
     if (count >= 1000) return `${(count / 1000).toFixed(0)}K`;
     return count.toString();
@@ -63,12 +70,12 @@ export function KOLSelector({ value, onChange }: KOLSelectorProps) {
                 onClick={() => onChange(value?.id === kol.id ? null : kol)}
               >
                 <CardContent className="p-4">
-                  <div className="font-medium">{kol.display_name}</div>
+                  <div className="font-medium">{kol.displayName}</div>
                   <div className="text-xs text-muted-foreground">
-                    @{kol.twitter_handle}
+                    @{kol.twitterHandle}
                   </div>
                   <div className="text-xs text-muted-foreground mt-1">
-                    👥 {formatFollowers(kol.follower_count)}
+                    👥 {formatFollowers(kol.followerCount)}
                   </div>
                 </CardContent>
               </Card>
